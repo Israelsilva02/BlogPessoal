@@ -4,10 +4,13 @@ import java.time.LocalDateTime;
 
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -27,6 +30,7 @@ public class Postagem {
 	@NotBlank(message = " O atributo texto e obrigatorio!")
 	@Size(min = 10, max = 1000, message = "O atributo texto deve conter no minimo 10 e no maximo 1000 caracteres")
 	private String 	texto;
+	
 	
 	public long getId() {
 		return id;
@@ -62,4 +66,18 @@ public class Postagem {
 
 	@UpdateTimestamp
 	private LocalDateTime data;
-}
+
+	@ManyToOne
+	@JsonIgnoreProperties("postagens")
+	private Tema tema;
+
+
+	public Tema getTema() {
+		return tema;
+	}
+
+	public void setTema(Tema tema) {
+		this.tema = tema;
+	}
+	
+	}

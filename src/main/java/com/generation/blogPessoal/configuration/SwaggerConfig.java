@@ -4,12 +4,12 @@ import org.springdoc.core.customizers.OpenApiCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.models.ExternalDocumentation;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
+import io.swagger.v3.oas.models.responses.ApiResponse;
 import io.swagger.v3.oas.models.responses.ApiResponses;
 
 @Configuration
@@ -26,12 +26,13 @@ public class SwaggerConfig {
 						.url("https://github.com/conteudoGeneration/"));
 
 	}
-
 	@Bean
 	OpenApiCustomizer customizerGlobalHeaderOpenApiCustomizer () {
 		return openApi -> {
-			openApi.getPaths().values().forEach(pathItem -> pathItem.readOperations().forEach(operation  ->{
+			openApi.getPaths().values().forEach(pathItem -> pathItem.readOperations().forEach(operation  -> {
+			
 				ApiResponses apiResponses = operation.getResponses();
+				
 				apiResponses.addApiResponse("200", createApiResponse("Sucesso!"));
 				apiResponses.addApiResponse("201", createApiResponse("Objeto Persistido!"));
 				apiResponses.addApiResponse("204", createApiResponse("Objeto Excluido!"));
@@ -43,8 +44,8 @@ public class SwaggerConfig {
 			}));
 		};
 	}
-
 	private ApiResponse createApiResponse(String message) {
+		// TODO Auto-generated method stub
 		return new ApiResponse().description(message);
 	}
 }
